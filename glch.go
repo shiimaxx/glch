@@ -201,7 +201,12 @@ func display(versionTags []*gitlab.Tag, changelog map[string]*content) string {
 }
 
 func main() {
-	gl, err := gitlab.NewClient(os.Getenv("GITLAB_TOKEN"), gitlab.WithBaseURL(defaultGitLabAPIEndpoint))
+	endpoint := os.Getenv("GITLAB_API")
+	if endpoint == "" {
+		endpoint = defaultGitLabAPIEndpoint
+	}
+
+	gl, err := gitlab.NewClient(os.Getenv("GITLAB_TOKEN"), gitlab.WithBaseURL(endpoint))
 	if err != nil {
 		log.Fatal("create gitlab client failed: ", err)
 	}
