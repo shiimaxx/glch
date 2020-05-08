@@ -5,13 +5,13 @@
 
 ## Usage
 
-Run the `glch` after you moved to GitLab project root directory.
+Run the `glch` after you moved to the GitLab project root directory.
 
 ```
 $ glch [--latest|--only version|--next-version version]
 ```
 
-You can use following options.
+You can use the following options.
 
 - `--latest`
     - Display changelog for the most recent version only
@@ -23,7 +23,7 @@ You can use following options.
 
 ## GitLab Token
 
-Setting your GitLab Token. You can get GitLab Token from [this page](https://gitlab.com/profile/personal_access_tokens).
+Please set your GitLab Token when using in a private project. You can get GitLab Token from [this page](https://gitlab.com/profile/personal_access_tokens).
 
 ```
 $ export GITLAB_TOKEN=...
@@ -41,7 +41,7 @@ export GITLAB_API=https://gitlab.example.com/api/v4/
 
 ## Format of the changelog
 
-`glch` will generate changelog following format.
+`glch` will generate a changelog following format that based on 「[keep a changelog](https://keepachangelog.com/)」
 
 ```
 ## Version - YYYY-MM-DD
