@@ -53,7 +53,7 @@ func (c *gitlabClient) getTotalPages(endpoint string) (int, error) {
 func (c *gitlabClient) getCommits(pid int) ([]*gitlab.Commit, error) {
 	totalPages, err := c.getTotalPages(fmt.Sprintf("projects/%d/repository/commits", pid))
 	if err != nil {
-		errors.Wrap(err, "get total pages failed")
+		return nil, errors.Wrap(err, "get total pages failed")
 	}
 
 	eg := errgroup.Group{}
@@ -93,7 +93,7 @@ func (c *gitlabClient) getCommits(pid int) ([]*gitlab.Commit, error) {
 func (c *gitlabClient) getMergeRequest(pid int) ([]*gitlab.MergeRequest, error) {
 	totalPages, err := c.getTotalPages(fmt.Sprintf("projects/%d/merge_requests", pid))
 	if err != nil {
-		errors.Wrap(err, "get total pages failed")
+		return nil, errors.Wrap(err, "get total pages failed")
 	}
 
 	eg := errgroup.Group{}
@@ -146,7 +146,7 @@ func (c *gitlabClient) getProject(path string) (*gitlab.Project, error) {
 func (c *gitlabClient) getTags(pid int) ([]*gitlab.Tag, error) {
 	totalPages, err := c.getTotalPages(fmt.Sprintf("projects/%d/repository/tags", pid))
 	if err != nil {
-		errors.Wrap(err, "get total pages failed")
+		return nil, errors.Wrap(err, "get total pages failed")
 	}
 
 	eg := errgroup.Group{}
