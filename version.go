@@ -4,4 +4,4 @@ package main
 const Name = "glch"
 
 // Version is application version
-const Version = "0.1.1"
+const Version = "0.1.2"
