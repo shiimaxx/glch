@@ -96,6 +96,7 @@ func (g *glch) run(args []string) int {
 	commits, err := g.repository.getCommits(project.ID)
 	if err != nil {
 		fmt.Fprintln(g.errStream, "get commits failed: ", err)
+		return exitCodeError
 	}
 
 	sort.Slice(commits, func(i, j int) bool {
