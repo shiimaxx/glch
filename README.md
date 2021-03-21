@@ -1,5 +1,7 @@
 # glch
 
+![CI](https://github.com/shiimaxx/glch/workflows/CI/badge.svg)
+
 `glch` generates changelog based on GitLab Merge Request.
 
 
