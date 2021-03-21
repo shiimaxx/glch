@@ -51,40 +51,24 @@ func (c *gitlabClient) getTotalPages(endpoint string) (int, error) {
 }
 
 func (c *gitlabClient) getCommits(pid int) ([]*gitlab.Commit, error) {
-	totalPages, err := c.getTotalPages(fmt.Sprintf("projects/%d/repository/commits", pid))
-	if err != nil {
-		return nil, errors.Wrap(err, "get total pages failed")
-	}
-
-	eg := errgroup.Group{}
-
-	results := make([][]*gitlab.Commit, totalPages)
-	for i := 1; i <= totalPages; i++ {
-		i := i
-		eg.Go(func() error {
-			c, res, err := c.Commits.ListCommits(pid, &gitlab.ListCommitsOptions{
-				ListOptions: gitlab.ListOptions{
-					Page: i,
-				},
-			})
-			if err != nil {
-				return errors.Wrap(err, "api request failed")
-			}
-			if res.StatusCode != http.StatusOK {
-				return errors.Errorf("api request failed: invalid status: %d", res.StatusCode)
-			}
-			results[i-1] = c
-			return nil
-		})
-	}
-
-	if err := eg.Wait(); err != nil {
-		return nil, err
-	}
-
 	var commits []*gitlab.Commit
-	for _, r := range results {
-		commits = append(commits, r...)
+	for i := 1; ; i ++ {
+		c, res, err := c.Commits.ListCommits(pid, &gitlab.ListCommitsOptions{
+			ListOptions: gitlab.ListOptions{
+				Page: i,
+			},
+		})
+		if err != nil {
+			return nil, errors.Wrap(err, "api requests failed")
+		}
+		if res.StatusCode != http.StatusOK {
+			return nil, errors.Errorf("api requests failed: invalid status: %d", res.StatusCode)
+		}
+		commits = append(commits, c...)
+
+		if res.NextPage == 0 {
+			break
+		}
 	}
 
 	return commits, nil
