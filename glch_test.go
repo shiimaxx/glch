@@ -2,7 +2,9 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
+	"time"
 )
 
 func Test_run(t *testing.T) {
@@ -22,7 +24,9 @@ func Test_run(t *testing.T) {
 		t.Fatal(errStream.String())
 	}
 
-	want := `## Unreleased - 2021-03-21
+	today := time.Now().Format("2006-01-02")
+
+	want := fmt.Sprintf(`## Unreleased - %s
 
 - Feature 3 shiimaxx/glch-demo!3 from [@shiimaxx](https://gitlab.com/shiimaxx)
 
@@ -38,7 +42,7 @@ func Test_run(t *testing.T) {
 - Initial release
 
 
-`
+`, today)
 
 	got := outStream.String()
 
